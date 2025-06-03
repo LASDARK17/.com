@@ -1,0 +1,951 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(90deg, #b11216, #e63946);
+  z-index: 1000;
+  box-shadow: 0 6px 20px rgba(181, 18, 22, 0.7);
+  padding: 18px 0;
+  font-family: 'Poppins', sans-serif;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Agrega un efecto sticky con sombra más marcada al hacer scroll */
+header.scrolled {
+  background: linear-gradient(90deg, #8b0f12, #bf1c21);
+  box-shadow: 0 8px 25px rgba(139, 15, 18, 0.9);
+}
+
+header .container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Logo y botón */
+.logo-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  transition: transform 0.3s ease;
+}
+
+.logo-button:hover {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.logo-img {
+  height: 64px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+/* Navegación */
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.nav-list li {
+  list-style: none;
+}
+
+.nav-button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 14px 22px;
+  border-radius: 12px;
+  transition: 
+    background-color 0.4s ease, 
+    color 0.4s ease, 
+    box-shadow 0.4s ease,
+    transform 0.2s ease;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  box-shadow: inset 0 0 0 0 #fff;
+}
+
+.nav-button:hover,
+.nav-button:focus-visible,
+.nav-button.active {
+  background-color: #fff;
+  color: #b11216;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.6);
+  outline: none;
+  transform: scale(1.1);
+}
+
+
+/* Modal y fondo */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Contenido del modal */
+.modal-content {
+  background: #1e1e1e;
+  padding: 40px 48px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(177, 18, 22, 0.6);
+  max-width: 450px;
+  width: 100%;
+  color: #eee;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+}
+
+/* Botón cerrar */
+.close-button {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  font-size: 28px;
+  color: #eee;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.close-button:hover {
+  color: #b11216;
+}
+
+/* Título */
+.modal-content h2 {
+  margin-bottom: 30px;
+  font-weight: 700;
+  font-size: 28px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* Formulario */
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+#loginForm label {
+  font-weight: 600;
+  font-size: 17px;
+  color: #ddd;
+  user-select: none;
+}
+
+#loginForm input {
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: 2px solid rgba(255,255,255,0.25);
+  background-color: rgba(255,255,255,0.08);
+  color: #f0f0f0;
+  font-size: 18px;
+  font-weight: 600;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  box-shadow: inset 0 0 8px rgba(255,255,255,0.15);
+  outline-offset: 4px;
+}
+
+#loginForm input::placeholder {
+  color: #bbb;
+  font-style: italic;
+}
+
+#loginForm input:focus {
+  border-color: #ff4b4b;
+  background-color: rgba(255, 75, 75, 0.15);
+  outline: none;
+}
+
+/* Mensajes validación */
+#formMessage {
+  font-size: 16px;
+  min-height: 24px;
+  color: #f54242;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Botón enviar */
+#loginForm button {
+  padding: 18px 0;
+  border-radius: 24px;
+  border: none;
+  background: linear-gradient(135deg, #b11216 0%, #d42e30 60%, #900 100%);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(212, 46, 48, 0.7);
+  transition: background 0.35s ease, box-shadow 0.35s ease, transform 0.3s ease;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+#loginForm button:hover {
+  background: linear-gradient(135deg, #d42e30 0%, #ff5757 70%, #b11216 100%);
+  box-shadow: 0 10px 35px rgba(255, 87, 87, 0.9);
+  transform: scale(1.1) rotate(-1deg);
+}
+
+#loginForm button:active {
+  transform: scale(0.95) rotate(0deg);
+  box-shadow: 0 6px 20px rgba(255, 87, 87, 0.7);
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+  .modal-content {
+    padding: 32px 24px;
+  }
+  #loginForm label {
+    font-size: 15px;
+  }
+  #loginForm input {
+    font-size: 16px;
+    padding: 14px 16px;
+  }
+  #loginForm button {
+    font-size: 18px;
+    padding: 16px 0;
+    border-radius: 20px;
+  }
+}
+
+/*  Estilo del botón hamburguesa único */
+#mainHamburgerButton {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 32px;
+  height: 26px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1101;
+  padding: 0;
+}
+
+#mainHamburgerButton .bar {
+  height: 4px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 3px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Animación del icono (X) cuando está abierto */
+#mainHamburgerButton.open .bar:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+#mainHamburgerButton.open .bar:nth-child(2) {
+  opacity: 0;
+}
+
+#mainHamburgerButton.open .bar:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* 📱 Estilos responsive */
+@media (max-width: 768px) {
+  /* Menú deslizante */
+  #mainHamburgerMenu {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background-color: #b11216;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    z-index: 1100;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Menú expandido */
+  #mainHamburgerMenu.show {
+    max-height: 600px; /* puedes ajustarlo según el contenido real */
+  }
+
+  /* Lista de navegación */
+  #mainHamburgerMenu .nav-list {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px;
+    gap: 12px;
+  }
+
+  /* Botones del menú */
+  #mainHamburgerMenu .nav-button,
+  #mainHamburgerMenu .cart-button,
+  #mainHamburgerMenu .login-button {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 17px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  #mainHamburgerMenu .nav-button:hover,
+  #mainHamburgerMenu .cart-button:hover,
+  #mainHamburgerMenu .login-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+  }
+
+  /* Iconos del carrito y login */
+  #mainHamburgerMenu .cart-icon,
+  #mainHamburgerMenu .login-button img {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Contador del carrito */
+  #mainHamburgerMenu #cart-count {
+    margin-left: auto;
+    background-color: #ffffff;
+    color: #b11216;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  /* Mensaje de bienvenida */
+  #mainHamburgerMenu #welcomeMessage {
+    color: #ffffff;
+    padding: 10px 0 0 0;
+    font-size: 16px;
+    font-style: italic;
+  }
+
+  /* Mostrar botón hamburguesa */
+  #mainHamburgerButton {
+    display: flex;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+}
+
+
+
+
+/* Boton Flecha arriba*/
+#rocketButton {
+  position: fixed;
+  bottom: 100px;
+  right: 15px;
+  background-color: #b11216;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s, transform 0.3s, opacity 0.4s ease;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+}
+
+#rocketButton svg {
+  width: 34px;
+  height: 34px;
+  fill: white;
+}
+
+#rocketButton.show {
+  opacity: 1;
+  visibility: visible;
+  animation: fadeInUp 0.6s ease, pulse 2s ease-in-out infinite;
+}
+
+#rocketButton:hover {
+  background-color: #e91e23;
+  transform: scale(1.1);
+}
+
+/* Animación de aparición */
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Pulso elegante continuo */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Adaptable a pantallas pequeñas */
+@media (max-width: 600px) {
+  #rocketButton {
+    width: 55px;
+    height: 55px;
+    bottom: 15vh;
+    right: 4vw;
+  }
+
+  #rocketButton svg {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+
+
+/* Botón flotante de Login */
+#loginBtn {
+  background-color: rgba(220, 0, 0, 0.85);
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+#loginBtn:hover,
+#loginBtn:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.12);
+  outline: none;
+}
+
+#loginBtn img {
+  width: 32px;
+  height: 32px;
+  filter: brightness(0) invert(1);
+  user-select: none;
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+#loginBtn:hover img {
+  transform: rotate(8deg);
+}
+
+/* Versión responsiva */
+@media (max-width: 480px) {
+  #loginBtn {
+    width: 50px;
+    height: 50px;
+  }
+
+  #loginBtn img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+
+
+/* --- BOTÓN DEL CARRITO --- */
+.cart-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  padding: 10px;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 8px rgba(255, 65, 54, 0.5);
+}
+.cart-button:hover {
+  transform: scale(1.2) rotate(5deg);
+  box-shadow: 0 0 15px rgba(255, 65, 54, 0.9);
+}
+
+.cart-icon {
+  width: 30px;
+  height: 30px;
+  user-select: none;
+  vertical-align: middle;
+  filter: drop-shadow(0 0 1px #fff);
+}
+
+#cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: white;
+  color: #ff3c00;
+  border-radius: 50%;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  box-shadow: 0 0 8px rgba(255, 65, 54, 0.8);
+  animation: pulse 1.8s infinite ease-in-out;
+}
+
+/* --- ANIMACIÓN SUAVE PARA EL CONTADOR --- */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 8px rgba(255, 65, 54, 0.8);
+  }
+  50% {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(255, 65, 54, 1);
+  }
+}
+
+/* --- MODAL GENERAL --- */
+.cart-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+.cart-modal.active {
+  display: flex;
+}
+
+/* --- CONTENIDO DEL MODAL --- */
+.cart-content {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* --- BOTÓN DE CIERRE --- */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.close-btn:hover {
+  color: #333;
+}
+
+/* --- LISTA DE ITEMS EN EL CARRITO --- */
+#cart-items-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+#cart-items-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+#cart-items-list li button {
+  background: transparent;
+  border: none;
+  color: #d33;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+#cart-items-list li button:hover {
+  color: #a00;
+}
+
+/* --- BOTONES DE ACCIÓN --- */
+.clear-cart-btn,
+.checkout-btn {
+  margin-top: 10px;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.3s;
+}
+.clear-cart-btn {
+  background-color: #f44336;
+  color: #fff;
+}
+.clear-cart-btn:hover {
+  background-color: #c62828;
+}
+.checkout-btn {
+  background-color: #4caf50;
+  color: #fff;
+  margin-left: 10px;
+}
+.checkout-btn:hover {
+  background-color: #388e3c;
+}
+
+/* --- ANIMACIÓN DE ENTRADA AL MODAL --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  header .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .nav-list {
+    justify-content: flex-start;
+    width: 100%;
+    gap: 1.2rem;
+    margin-top: 12px;
+  }
+}
+
+
+
+
+
+
+
+/* Avisos de Privacidad CSS */
+ /* Estilos básicos para la página */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Espacio para el header */
+        header {
+            height: 100px; /* Ajusta la altura según tu header */
+            background-color: #eee; /* Solo para que veas el espacio, luego quita el color */
+        }
+
+        /* Espacio para el footer */
+        footer {
+            height: 60px; /* Ajusta según tu footer */
+            background-color: #eee; /* Solo para que veas el espacio, luego quita el color */
+            margin-top: 40px;
+        }
+
+        /* Contenedor principal */
+        main {
+            max-width: 900px;
+            margin: 120px auto 30px auto;
+            padding: 0 20px 40px 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 6px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            color: #34495e;
+            margin-top: 2rem;
+        }
+
+        p {
+            margin: 1rem 0;
+            font-size: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+        }
+main {
+    max-width: 900px;
+    margin: 120px auto 30px auto; /* ↑ margen superior aumentado a 80px */
+    padding: 0 20px 0px 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 6px;
+}
+
+
+
+
+
+
+        
+/* =========================
+     ESTILOS DEL FOOTER
+  ========================= */
+.footer {
+  background: linear-gradient(to bottom, #a3202c, #6b101b);
+  color: #fff;
+  padding: 40px 20px 15px;
+  font-size: 0.95rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 50px;
+  text-align: left;
+}
+
+.footer h3 {
+  color: #ffcc00;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+  border-bottom: 2px solid #ffcc00;
+  padding-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer ul li {
+  margin-bottom: 12px;
+}
+
+.footer ul li a {
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+  position: relative;
+}
+
+.footer ul li a::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #ffcc00;
+  transition: width 0.3s ease;
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+}
+
+.footer ul li a:hover {
+  color: #ffcc00;
+}
+
+.footer ul li a:hover::after {
+  width: 100%;
+}
+
+/* Redes sociales */
+.footer-social {
+  text-align: center;
+}
+
+.footer-social h3 {
+  margin-bottom: 20px;
+  color: #ffcc00;
+  font-size: 1.3rem;
+  border-bottom: 2px solid #ffcc00;
+  padding-bottom: 5px;
+}
+
+.footer-social .social-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.social-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.social-btn {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 3px solid #ccc;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+
+.social-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(255, 204, 0, 0.5);
+}
+
+.social-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  
+}
+
+.social-label {
+  font-size: 0.85rem;
+  margin-top: 8px;
+  color: white;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Colores personalizados por red */
+.social-btn.facebook {
+  border-color: #1877f2;
+}
+
+.social-btn.instagram {
+  border-color: #e4405f;
+}
+
+.social-btn.whatsapp {
+  border-color: #25d366;
+}
+
+/* Responsivo para móviles */
+@media (max-width: 768px) {
+  .footer-social .social-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .social-btn {
+    width: 60px;
+    height: 60px;
+  }
+
+  .social-label {
+    font-size: 0.8rem;
+  }
+}
+
+
+/* Pie de página */
+.copyright {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 204, 0, 0.4);
+  font-size: 0.85rem;
+  color: #eee;
+  margin-top: 40px;
+}
+
+/* =========================
+     MEDIA QUERIES
+  ========================= */
+@media (max-width: 768px) {
+  .footer {
+    padding: 40px 15px 20px;
+    text-align: center;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .footer h3 {
+    text-align: center;
+  }
+
+  .footer ul {
+    text-align: center;
+  }
+
+  .footer-social .social-links {
+    justify-content: center;
+  }
+}

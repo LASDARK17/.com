@@ -1,0 +1,64 @@
+    /* Estilos generales del body */
+    #bodyOverlay {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        overflow: auto;
+        transition: overflow 0.5s ease;
+    }
+
+    /* Estilo del overlay completo */
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 1); /* Fondo negro */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        transform: scale(1);
+    }
+
+    #overlay video {
+        max-width: 90vw;
+        max-height: 90vh;
+        object-fit: contain;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Botón grande tipo "X" para cerrar */
+    #cerrarBtn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 40px;
+        color: white;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 10000;
+        transition: transform 0.3s ease;
+    }
+
+    #cerrarBtn:hover {
+        transform: scale(1.2);
+        color: #ff4444;
+    }
+
+    #cerrarBtn:focus {
+        outline: none;
+    }
+
+    /* Responsividad para el video */
+    @media (max-width: 768px) {
+        #overlay video {
+            max-width: 95vw;
+            max-height: 95vh;
+        }
+    }
