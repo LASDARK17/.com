@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="ATLANTIC BURGER COMPANY ofrece una experiencia gastronómica excepcional con ingredientes frescos y sabores únicos." />
+
+  <!-- LOGO DE LA PAGINA PESTAÑA  -->
+  <link rel="icon" href="/Imagenes/1. Logo Abc.png" type="image/x-icon">
+  <title>ATLANTIC BURGER COMPANY</title>
+  <link rel="stylesheet" href="/CSS/TrabajaconNosotros.css" />
+  <script src="/JavaScript/MenuHamburguesa.js"></script>
+  <script src="/JavaScript/menuinteracion.js"></script>
+ 
+
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <!-- Logo -->
+    <div class="logo-wrapper">
+      <button onclick="window.location.href='index.html'" aria-label="Ir a la página principal" class="logo-button">
+        <img src="/Imagenes/1. Logo Abc.png" alt="Logo ATLANTIC BURGER COMPANY" class="logo-img" />
+      </button>
+    </div>
+
+<!-- Botón hamburguesa -->
+<button class="hamburger-button" id="hamburgerButton" aria-label="Menú" onclick="toggleMenu()">
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+</button>
+
+
+    <!-- Navegación -->
+    <nav role="navigation" aria-label="Menú principal">
+      <ul class="nav-list" id="navList">
+        <li><button type="button" class="nav-button" onclick="window.location.href='index.html'">Inicio</button></li>
+        <li><button type="button" class="nav-button" onclick="window.location.href='menu.html'">Menú</button></li>
+        <li><button type="button" class="nav-button" onclick="window.location.href='sobreNosotros.html'">Quienes Somos</button></li>
+        <li><button type="button" class="nav-button" onclick="window.location.href='TrabajaconNosotros.html'">Trabaja con nosotros</button></li>
+        <li>
+          <button type="button" onclick="showCart()" class="cart-button" aria-label="Ver carrito de compras">
+            <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Carrito de compras" class="cart-icon" />
+            <span id="cart-count">0</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+<!-- Contenedor principal -->
+    <main>
+ <!-- Introducción -->
+    <section class="intro">
+      <div class="text-content">
+        <h1>Únete a <span class="highlight">Atlantic Burger Company</span></h1>
+        <p>
+          <strong>Más que un lugar de trabajo, una experiencia única.</strong><br />
+          En Atlantic Burger valoramos la pasión por el servicio, el respeto mutuo y el crecimiento constante. ¿Buscas una oportunidad real de desarrollo? Este es tu lugar.
+        </p>
+        <a href="#formulario" class="btn-primary" aria-label="Ver formulario de solicitud">¡Postúlate hoy!</a>
+      </div>
+      <div class="intro-image" role="img" aria-label="Logo de Atlantic Burger Company"></div>
+    </section>
+
+    
+      <section class="valores">
+        <h2>Nuestros Principios</h2>
+        <div class="valores-carousel">
+          <div class="valores-track">
+            <div class="valor-item">Excelencia en la calidad de nuestros productos.</div>
+            <div class="valor-item">Respeto, diversidad y colaboración en cada jornada.</div>
+            <div class="valor-item">Innovación y mejora continua en todo lo que hacemos.</div>
+            <div class="valor-item">Compromiso real con el medio ambiente y la sociedad.</div>
+          </div>
+        </div>
+      </section>
+      
+
+    
+      <!-- Beneficios -->
+<section class="beneficios" aria-labelledby="beneficios-title">
+  <div class="container">
+    <h2 id="beneficios-title">Beneficios de ser parte de ABC</h2>
+    <ul class="beneficios-list" role="list">
+      <li>Excelente clima laboral y cultura de apoyo mutuo.</li>
+      <li>Capacitación constante y oportunidades de ascenso.</li>
+      <li>Flexibilidad horaria para equilibrar tu vida personal.</li>
+      <li>Bonificaciones, incentivos y reconocimientos mensuales.</li>
+      <li>Premios por desempeño y excelencia laboral.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Vacantes -->
+<section class="vacantes">
+  <div class="container">
+    <h2>Oportunidades Laborales</h2>
+    <ul class="vacantes-list">
+      <li>
+        <span class="icon" aria-hidden="true">🍽️</span>
+        <strong>Mesero/a:</strong> Atención personalizada al cliente y gestión de pedidos en sala.
+      </li>
+      <li>
+        <span class="icon" aria-hidden="true">👩‍🍳</span>
+        <strong>Cocinero/a:</strong> Elaboración de platillos siguiendo estándares de calidad.
+      </li>
+      <li>
+        <span class="icon" aria-hidden="true">🧹</span>
+        <strong>Auxiliar de limpieza:</strong> Mantenimiento de limpieza general del establecimiento.
+      </li>
+      <li>
+        <span class="icon" aria-hidden="true">🏍️</span>
+        <strong>Repartidor/a:</strong> Entrega eficiente y segura de pedidos a domicilio.
+      </li>
+    </ul>
+  </div>
+</section>
+
+    
+      <!-- Proceso de selección -->
+<section class="proceso">
+  <h2>Etapas del Proceso de Selección</h2>
+  <ol class="proceso-list">
+    <li>
+      <span class="icon">📩</span>
+      <div class="content">
+        <h3>Postulación</h3>
+        <p>Envío de tu información y postulación.</p>
+      </div>
+    </li>
+    <li>
+      <span class="icon">📞</span>
+      <div class="content">
+        <h3>Entrevista inicial</h3>
+        <p>Coordinación de entrevista inicial.</p>
+      </div>
+    </li>
+    <li>
+      <span class="icon">📝</span>
+      <div class="content">
+        <h3>Evaluación técnica</h3>
+        <p>Evaluación técnica (según el cargo).</p>
+      </div>
+    </li>
+    <li>
+      <span class="icon">🤝</span>
+      <div class="content">
+        <h3>Entrevista final</h3>
+        <p>Entrevista final con el equipo de gerencia.</p>
+      </div>
+    </li>
+    <li>
+      <span class="icon">🎉</span>
+      <div class="content">
+        <h3>Incorporación</h3>
+        <p>Incorporación formal al equipo.</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+
+  <!-- Preguntas Frecuentes Mejoradas -->
+<section class="faq">
+  <h2>Preguntas Frecuentes</h2>
+  
+  <details>
+    <summary>
+      <span>¿Cuáles son los horarios de trabajo?</span>
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    </summary>
+    <p>Contamos con turnos rotativos (mañana, tarde y noche), con descansos establecidos por ley.</p>
+  </details>
+
+  <details>
+    <summary>
+      <span>¿Es obligatorio contar con experiencia previa?</span>
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    </summary>
+    <p>No necesariamente. Brindamos formación a nuevos colaboradores.</p>
+  </details>
+
+  <details>
+    <summary>
+      <span>¿Ofrecen contrato formal?</span>
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+    </summary>
+    <p>Sí, todos los empleados están contratados legalmente y cuentan con seguridad social.</p>
+  </details>
+</section>
+
+
+    <section id="formulario" class="formulario">
+        <h2>Envía tu Solicitud</h2>
+        <p>Completa el siguiente formulario y nuestro equipo se comunicará contigo a la brevedad.</p>
+
+        <form id="solicitud-form" novalidate>
+            <label for="nombre">Nombre completo:</label><br />
+            <input type="text" id="nombre" name="Nombre" autocomplete="name" placeholder="Ej. Juan Pérez" />
+            <div class="error-message"></div>
+
+            <label for="correo">Correo electrónico:</label><br />
+            <input type="email" id="correo" name="Correo" autocomplete="email" placeholder="ejemplo@correo.com" />
+            <div class="error-message"></div>
+
+            <label for="telefono">Teléfono de contacto:</label><br />
+            <input type="tel" id="telefono" name="Telefono" autocomplete="tel" placeholder="+57 3001234567" />
+            <div class="error-message"></div>
+
+            <label for="mensaje">Cuéntanos sobre tu experiencia:</label><br />
+            <textarea id="mensaje" name="Mensaje" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
+            <div class="error-message"></div>
+
+            <label for="cv">Adjunta tu hoja de vida (PDF):</label><br />
+            <input type="file" id="cv" name="HojaDeVida" accept="application/pdf" />
+            <div class="error-message"></div>
+
+            <br />
+            <button type="submit">Enviar Solicitud</button>
+        </form>
+    </section>
+
+    <script>
+        // Obtiene el formulario por su ID
+        const form = document.getElementById('solicitud-form');
+
+        /**
+         * Limpia todos los mensajes de error y las clases 'error' de los campos.
+         */
+        function clearErrors() {
+            form.querySelectorAll('.error-message').forEach(div => div.textContent = '');
+            form.querySelectorAll('input, textarea').forEach(el => el.classList.remove('error'));
+        }
+
+        /**
+         * Convierte un objeto File a una cadena Base64.
+         * @param {File} file - El archivo a convertir.
+         * @returns {Promise<string>} Una promesa que resuelve con la cadena Base64 del archivo.
+         */
+        function toBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = err => reject(err);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Agrega un 'event listener' para el envío del formulario
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Previene el envío predeterminado del formulario
+            clearErrors(); // Limpia errores anteriores
+
+            let valid = true; // Bandera para controlar la validez del formulario
+
+            // Obtiene los valores de los campos del formulario
+            const nombre = form.Nombre.value.trim();
+            const correo = form.Correo.value.trim();
+            const telefono = form.Telefono.value.trim();
+            const mensaje = form.Mensaje.value.trim();
+            const archivo = form.HojaDeVida.files[0]; // Obtiene el primer archivo seleccionado
+
+            // --- Validaciones de los campos ---
+
+            // Validar Nombre
+            const exp_reg_nombre = /^[A-Za-z]+$/;
+            if (!nombre|| !exp_reg_nombre.test(nombre)) {
+                form.Nombre.classList.add('error');
+                form.Nombre.nextElementSibling.textContent = 'Por favor, ingresa tu nombre completo.';
+                valid = false;
+            } 
+
+            // Validar correo electrónico (debe contener "@" y terminar en ".com")
+            if (!correo) {
+                form.Correo.classList.add('error');
+                form.Correo.nextElementSibling.textContent = 'Por favor, ingresa tu correo electrónico.';
+                valid = false;
+            } else if (!/^.+@.+\.com$/.test(correo)) {
+                form.Correo.classList.add('error');
+                form.Correo.nextElementSibling.textContent = 'Correo debe contener "@" y terminar en ".com".';
+                valid = false;
+            }
+
+            // Validar teléfono (solo números, mínimo 7 dígitos, ignorando no-dígitos para la validación)
+            if (!telefono) {
+                form.Telefono.classList.add('error');
+                form.Telefono.nextElementSibling.textContent = 'Por favor, ingresa tu teléfono.';
+                valid = false;
+            } else if (!/^\d{7,}$/.test(telefono.replace(/\D/g, ''))) { // Elimina no-dígitos antes de validar
+                form.Telefono.classList.add('error');
+                form.Telefono.nextElementSibling.textContent = 'Teléfono debe tener solo números y al menos 7 dígitos.';
+                valid = false;
+            }
+
+            // Validar mensaje obligatorio
+            if (!mensaje) {
+                form.Mensaje.classList.add('error');
+                form.Mensaje.nextElementSibling.textContent = 'Por favor, cuéntanos sobre tu experiencia.';
+                valid = false;
+            }
+
+            // Validar archivo PDF obligatorio y tipo de archivo
+            if (!archivo) {
+                form.HojaDeVida.classList.add('error');
+                form.HojaDeVida.nextElementSibling.textContent = 'Por favor, adjunta tu hoja de vida en PDF.';
+                valid = false;
+            } else if (archivo.type !== 'application/pdf') {
+                form.HojaDeVida.classList.add('error');
+                form.HojaDeVida.nextElementSibling.textContent = 'El archivo debe ser un PDF.';
+                valid = false;
+            }
+
+            // Si el formulario no es válido, detiene la ejecución
+            if (!valid) return;
+
+            // Si el formulario es válido, muestra un mensaje de éxito (puedes personalizar esta parte)
+            alert('¡Solicitud enviada correctamente!');
+            form.reset();
+        });
+    </script>
+
+
+
+  <!-- Footer -->
+<div class="footer">
+  <div class="footer-container">
+    
+    <div>
+      <h3>Sobre Nosotros</h3>
+      <ul>
+        <li><a href="/Pagina Web/SobreNosotros.html">Acerca del Restaurante</a></li>
+        <li><a href="/Pagina Web/TrabajaconNosotros.html">Trabaja con nosotros</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>Atención al Cliente</h3>
+      <ul>
+        <li><a href="/Pagina Web/TerminosyUsosweb.html">Términos de uso web</a></li>
+        <li><a href="/Pagina Web/Avisos de privacidad.html">Aviso de Privacidad</a></li>
+        <li><a href="/Pagina Web/PoliticaTratamientoDeDatos.html">Política de tratamiento de datos</a></li>
+        <li><a href="/Pagina Web/TerminosyCondiciones.html">Términos y Condiciones del Restaurante</a></li>
+      </ul>
+    </div>
+
+    <!--  AQUÍ VA TODO EL BLOQUE DE REDES DENTRO DE LA COLUMNA -->
+    <div class="footer-social">
+      <h3>Síguenos</h3>
+      <div class="social-wrapper">
+        <div class="social-item">
+          <a href="https://www.facebook.com/share/1EgfEuqH6g/" target="_blank" rel="noopener" class="social-btn facebook">
+            <img src="/Imagenes/facebook-icon-logo-png-transparent.png" alt="Facebook">
+          </a>
+          <span class="social-label">Facebook</span>
+        </div>
+        <div class="social-item">
+          <a href="https://www.instagram.com/atlanticburgerbucaramanga" target="_blank" rel="noopener" class="social-btn instagram">
+            <img src="/Imagenes/Icono Instagram.jpg" alt="Instagram">
+          </a>
+          <span class="social-label">Instagram</span>
+        </div>
+        <div class="social-item">
+          <a href="https://wa.me/573008370095" target="_blank" rel="noopener" class="social-btn whatsapp">
+            <img src="/Imagenes/Icono WhatsApp.jpg" alt="WhatsApp">
+          </a>
+          <span class="social-label">WhatsApp</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="copyright">
+    © 2025 ATLANTIC BURGER COMPANY. Todos los derechos reservados.
+  </div>
+</div>
+
+  
+<!-- asistente -->
+<!-- Carga de los estilos base de n8n chat -->
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<!-- Contenedor visible en el DOM -->
+<div id="n8n-chat"></div>
+<!-- Script del chatbot con modo inline y español -->
+<script type="module">
+	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+	createChat({
+		webhookUrl: 'https://n8n-1xcn.onrender.com/webhook/74cd91ba-223a-45f2-ac94-0cc1cd00964b/chat', // Cambia por tu webhook real
+		webhookConfig: {
+			method: 'POST',
+			headers: {}
+		},
+		target: '#n8n-chat',
+		mode: 'inline', // Permite aplicar estilos CSS
+		chatInputKey: 'chatInput',
+		chatSessionKey: 'sessionId',
+		metadata: {},
+		showWelcomeScreen: true,
+		defaultLanguage: 'es',
+
+		initialMessages: [
+			'🍔 ¡Hola! Bienvenido a *Atlantic Burger Company*!',
+			'🤖 Soy tu asistente virtual. ¿Qué deseas saber hoy?'
+		],
+
+		i18n: {
+			es: {
+				title: 'Atlantic Burger Company 🍟',
+				subtitle: '¿Tienes hambre? Estoy para ayudarte 👨‍🍳',
+				footer: 'Asistente automático. Si necesitas ayuda directa, contáctanos por WhatsApp.',
+				getStarted: 'Empezar conversación',
+				inputPlaceholder: 'Escribe tu pedido o pregunta...',
+			}
+		},
+	});
+</script>
+
+<!-- Botón flecha para subir arriba -->
+<button id="rocketButton" aria-label="Volver arriba">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M12 4l-8 8h5v8h6v-8h5l-8-8z"/>
+  </svg>
+</button>
+
+
+<script>
+  const rocketButton = document.getElementById("rocketButton");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 100) {
+      rocketButton.classList.add("show");
+    } else {
+      rocketButton.classList.remove("show");
+    }
+  });
+
+  rocketButton.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+</script>
+
+</body>
+</html>

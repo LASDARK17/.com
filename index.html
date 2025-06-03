@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="ATLANTIC BURGER COMPANY ofrece una experiencia gastronómica excepcional con ingredientes frescos y sabores únicos." />
+
+  <!-- LOGO DE LA PAGINA PESTAÑA  -->
+  <link rel="icon" href="/Imagenes/1. Logo Abc.png" type="image/x-icon">
+  <title>ATLANTIC BURGER COMPANY</title>
+  <link rel="stylesheet" href="/CSS/style.css" />
+  <link rel="stylesheet" href="/CSS/Overlay.css" />
+  <script src="/JavaScript/OverlayIndex.js"></script>
+  <script src="/JavaScript/MenuHamburguesa.js"></script>
+  <script src="/JavaScript/AnimacionScrolliconosredesSociales.js"></script>
+  <script src="/JavaScript/menuinteracion.js"></script>
+
+<body id="bodyOverlay">
+    <!-- Overlay publicitario -->
+    <div id="overlay">
+        <!-- Botón tipo "X" para cerrar -->
+        <button id="cerrarBtn" aria-label="Cerrar overlay">&times;</button>
+
+        <!-- Video del anuncio -->
+        <video autoplay loop muted playsinline>
+            <source src="/Video de publicidad/Atlantic Burger Company El sabor que seduce, el placer que conquista..mp4" type="video/mp4">
+
+        </video>
+    </div>
+
+    <!-- Contenido principal -->
+    <main id="mainContent">
+        <h1>Bienvenido a Atlantic Burger</h1>
+    </main>
+</body>
+
+
+
+<!-- Inicio de pagina sin overlay -->
+<body>
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <!-- Logo -->
+    <div class="logo-wrapper">
+      <button onclick="window.location.href='index.html'" aria-label="Ir a la página principal" class="logo-button">
+        <img src="/Imagenes/1. Logo Abc.png" alt="Logo ATLANTIC BURGER COMPANY" class="logo-img" />
+      </button>
+    </div>
+
+    <!-- Botón hamburguesa -->
+    <button class="hamburger-button" id="mainHamburgerButton" aria-label="Menú" onclick="toggleMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <!-- Menú principal -->
+    <nav id="mainHamburgerMenu" role="navigation" aria-label="Menú principal">
+      <ul class="nav-list" id="navList">
+        <li><button type="button" class="nav-button" onclick="window.location.href='index.html'">Inicio</button></li>
+        <li><button type="button" class="nav-button" onclick="window.location.href='menu.html'">Menú</button></li>
+        <li><button type="button" class="nav-button" onclick="window.location.href='sobreNosotros.html'">Quienes Somos</button></li>
+        <li><button type="button" class="nav-button" onclick="window.location.href='TrabajaconNosotros.html'">Trabaja con nosotros</button></li>
+        <li>
+          <button type="button" onclick="showCart()" class="cart-button" aria-label="Ver carrito de compras">
+            <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Carrito de compras" class="cart-icon" />
+            <span id="cart-count">0</span>
+          </button>
+        </li>
+        <li>
+          <!-- Botón login (sin onclick) -->
+          <button type="button" id="loginBtn" class="login-button" aria-label="Iniciar sesión">
+            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Icono de usuario" />
+          </button>
+        </li>
+        <li id="welcomeMessage" style="font-weight: bold;"></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Modal Login -->
+<div id="loginModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="loginTitle" aria-modal="true" style="display:none;">
+  <div class="modal-content" role="document">
+    <button id="closeModal" class="close-button" aria-label="Cerrar formulario">&times;</button>
+    <h2 id="loginTitle">Iniciar Sesión</h2>
+    <form id="loginForm" novalidate>
+      <label for="name">Nombre</label>
+      <input type="text" id="name" name="name" placeholder="Tu nombre" required minlength="3" />
+
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required />
+
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" name="password" placeholder="Tu contraseña" required minlength="6" />
+
+      <div id="formMessage" role="alert" aria-live="polite"></div>
+
+      <button type="submit" aria-label="Enviar formulario de inicio de sesión">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<!-- Script para el botón de inicio de sesión -->
+<script>
+// Solo una vez cada listener y función
+const loginBtn = document.getElementById('loginBtn');
+const loginModal = document.getElementById('loginModal');
+const closeModal = document.getElementById('closeModal');
+const loginForm = document.getElementById('loginForm');
+const formMessage = document.getElementById('formMessage');
+
+loginBtn.addEventListener('click', () => {
+  loginModal.style.display = 'flex';
+  loginModal.setAttribute('aria-hidden', 'false');
+  formMessage.textContent = '';
+  formMessage.style.color = '#f54242';
+});
+
+closeModal.addEventListener('click', () => {
+  loginModal.style.display = 'none';
+  loginModal.setAttribute('aria-hidden', 'true');
+  loginForm.reset();
+  formMessage.textContent = '';
+});
+
+window.addEventListener('click', (e) => {
+  if (e.target === loginModal) {
+    loginModal.style.display = 'none';
+    loginModal.setAttribute('aria-hidden', 'true');
+    loginForm.reset();
+    formMessage.textContent = '';
+  }
+});
+
+// Cambia el color del placeholder a rojo si hay error
+function setPlaceholderError(input, error) {
+  if (error) {
+    input.classList.add('input-error');
+  } else {
+    input.classList.remove('input-error');
+  }
+}
+
+// Aplica el color rojo al placeholder usando CSS
+const style = document.createElement('style');
+style.innerHTML = `
+  .input-error::placeholder {
+    color: #f54242 !important;
+    opacity: 1;
+  }
+`;
+document.head.appendChild(style);
+
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  formMessage.textContent = '';
+  formMessage.style.color = '#f54242';
+
+  const nameInput = loginForm.name;
+  const emailInput = loginForm.email;
+  const passwordInput = loginForm.password;
+
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+
+  let hasError = false;
+
+  // Validar nombre
+  if (name === "" || name === nameInput.placeholder) {
+    setPlaceholderError(nameInput, true);
+    formMessage.textContent = 'Por favor, ingresa tu nombre.';
+    nameInput.focus();
+    hasError = true;
+  } else if (name.length < 3) {
+    setPlaceholderError(nameInput, true);
+    formMessage.textContent = 'Por favor, ingresa un nombre válido (mínimo 3 caracteres).';
+    nameInput.focus();
+    hasError = true;
+  } else {
+    setPlaceholderError(nameInput, false);
+  }
+
+  // Validar correo
+  if (!hasError && (email === "" || email === emailInput.placeholder)) {
+    setPlaceholderError(emailInput, true);
+    formMessage.textContent = 'Por favor, ingresa tu correo electrónico.';
+    emailInput.focus();
+    hasError = true;
+  } else if (!hasError) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      setPlaceholderError(emailInput, true);
+      formMessage.textContent = 'Por favor, ingresa un correo electrónico válido.';
+      emailInput.focus();
+      hasError = true;
+    } else {
+      setPlaceholderError(emailInput, false);
+    }
+  } else {
+    setPlaceholderError(emailInput, false);
+  }
+
+  // Validar contraseña
+  if (!hasError && (password === "" || password === passwordInput.placeholder)) {
+    setPlaceholderError(passwordInput, true);
+    formMessage.textContent = 'Por favor, ingresa tu contraseña.';
+    passwordInput.focus();
+    hasError = true;
+  } else if (!hasError && password.length < 6) {
+    setPlaceholderError(passwordInput, true);
+    formMessage.textContent = 'La contraseña debe tener al menos 6 caracteres.';
+    passwordInput.focus();
+    hasError = true;
+  } else {
+    setPlaceholderError(passwordInput, false);
+  }
+
+  if (hasError) {
+    return;
+  }
+
+  // Si todo está bien
+  setPlaceholderError(nameInput, false);
+  setPlaceholderError(emailInput, false);
+  setPlaceholderError(passwordInput, false);
+
+  formMessage.style.color = '#4CAF50';
+  formMessage.textContent = `¡Bienvenido, ${name}! Has iniciado sesión correctamente.`;
+
+  // Función para guardar el nombre en cookie
+  function setCookie(name, value, days) {
+    const d = new Date();
+    d.setTime(d.getTime() + (days*24*60*60*1000));
+    const expires = "expires="+ d.toUTCString();
+    document.cookie = name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
+  }
+
+  // Función para obtener el nombre de la cookie
+  function getCookie(name) {
+    const cname = name + "=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for(let i=0; i<ca.length; i++) {
+      let c = ca[i].trim();
+      if (c.indexOf(cname) === 0) {
+        return c.substring(cname.length, c.length);
+      }
+    }
+    return "";
+  }
+
+  // Mostrar saludo si existe cookie userName al cargar la página
+  window.addEventListener('DOMContentLoaded', () => {
+    const userName = getCookie('userName');
+    if (userName) {
+      const welcomeEl = document.getElementById('welcomeUser');
+      if (welcomeEl) {
+        welcomeEl.textContent = `¡Bienvenido(a), ${userName}!`;
+      }
+    }
+  });
+
+  setCookie('userName', name, 7); // Guarda el nombre por 7 días
+  const welcomeEl = document.getElementById('welcomeUser');
+  if (welcomeEl) {
+    welcomeEl.textContent = `¡Bienvenido(a), ${name}!`;
+  }
+
+  setTimeout(() => {
+    loginModal.style.display = 'none';
+    loginModal.setAttribute('aria-hidden', 'true');
+    loginForm.reset();
+    formMessage.textContent = '';
+    formMessage.style.color = '#f54242';
+  }, 3000);
+});
+</script>
+
+<!-- MODAL DEL CARRITO -->
+<div id="cart-modal" class="cart-modal">
+  <div class="cart-content">
+    <button id="close-cart" class="close-btn" onclick="hideCart()">&times;</button>
+    <h2 id="cart-title">🛒 Carrito de Compras</h2>
+    <div id="cart-items"></div>
+    <p id="cart-empty-message">Tu carrito está vacío.</p>
+    <div class="cart-total">
+      <strong>Total:</strong> $<span id="cart-total">0.00</span>
+    </div>
+    <button onclick="clearCart()">Vaciar Carrito</button>
+    <button onclick="checkout()">Finalizar Pedido</button>
+  </div>
+</div>
+
+<!-- MODAL DE LISTA DE DESEADOS -->
+<div id="wishlist-modal" class="cart-modal">
+  <div class="cart-content">
+    <button id="close-wishlist" class="close-btn" onclick="hideWishlist()">&times;</button>
+    <h2 id="wishlist-title">❤️ Lista de Deseados</h2>
+    <div id="wishlist-items"></div>
+    <p id="wishlist-empty-message">Tu lista está vacía.</p>
+  </div>
+</div>
+
+
+
+
+    
+  <!-- Página Inicio -->
+<section id="home" class="page active" tabindex="0" aria-label="Página de inicio" style="position: relative; overflow: hidden;">
+
+  <!-- Video de fondo -->
+  <video autoplay muted loop playsinline
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
+    <source src="/Video de publicidad/Video de WhatsApp 2025-05-28 a las 21.38.20_187666b1.mp4" type="video/mp4" />
+  
+  </video>
+
+  <!-- Contenido principal -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <div class="hero-section" style="position: relative; z-index: 10; color: white; text-align: center; padding: 2rem;">
+    <article class="hero-content">
+
+      <!-- Saludo dinámico con JS -->
+      <h1 class="welcome-section" id="welcomeUser">Bienvenidos</h1> 
+
+      <h2 class="company-name">ATLANTIC BURGER COMPANY</h2>
+
+      <p class="hero-description">
+        Le invitamos a disfrutar de una experiencia gastronómica excepcional,
+        donde la calidad y el sabor se unen en cada plato.
+      </p>
+      <ul class="hero-features" style="list-style: none; padding: 0; max-width: 400px; margin: 0 auto;">
+        <li>Ingredientes frescos y seleccionados</li>
+        <li>Preparación artesanal con dedicación</li>
+        <li>Sabores únicos que satisfacen tu paladar</li>
+      </ul>
+      <div class="hero-buttons" style="margin-top: 2rem;">
+        <button class="btn-primary" onclick="window.location.href='menu.html'" aria-label="Ver nuestro menú" style="margin-right: 1rem; padding: 0.8rem 1.5rem; font-size: 1.2rem; cursor: pointer;">
+          <i class="fas fa-utensils"></i> Ver nuestro menú
+        </button>
+
+        <button class="btn-secondary" onclick="window.open('https://wa.me/573008370095?text=Hola%2C%20me%20gustar%C3%ADa%20hacer%20una%20orden', '_blank')" aria-label="Contáctenos" style="padding: 0.8rem 1.5rem; font-size: 1.2rem; cursor: pointer;">
+          <i class="fas fa-phone-alt"></i> Contáctenos
+        </button>
+      </div>
+    </article>
+  </div>
+
+</section>
+
+
+
+<!-- Sección de Promociones Mejorada -->
+<section class="promos-section">
+  <h2>Promociones Especiales</h2>
+  <p>Disfruta de nuestras ofertas exclusivas</p>
+  
+  <div class="promo-carousel">
+    <div class="carousel-track" id="carousel-track" onmouseenter="pauseScroll()" onmouseleave="resumeScroll()">
+      
+      <div class="promo-card">
+        <img src="/Productos/B - Montana Burger.JPG" alt="Combo Montana Burger + Bebida">
+        <span class="badge oferta">OFERTA</span>
+        <h3>Combo Montana Burger + Bebida</h3>
+        <p class="precio-descuento">$24.900 <span class="precio-anterior">$29.900</span></p>
+        <button class="btn-oferta" data-id="1" onclick="handleOfferClick(event)">Aprovechar Oferta</button>
+      </div>
+
+      <div class="promo-card">
+        <img src="/Productos/HD - Switz Dog (2).jpg" alt="Super Hot Dog">
+        <span class="badge nuevo">NUEVO</span>
+        <h3>Super Hot Dog</h3>
+        <p class="precio-descuento">$32.900 <span class="precio-anterior">$38.900</span></p>
+        <button class="btn-oferta" data-id="4" onclick="handleOfferClick(event)">Aprovechar Oferta</button>
+      </div>
+
+      <div class="promo-card">
+        <img src="/Productos/PL - Papas Locas Especiales.jpg" alt="Super Papas Locas Especiales">
+        <span class="badge nuevo">NUEVO</span>
+        <h3>Super Papas Locas Especiales</h3>
+        <p class="precio-descuento">$32.900 <span class="precio-anterior">$38.900</span></p>
+        <button class="btn-oferta" data-id="2" onclick="handleOfferClick(event)">Aprovechar Oferta</button>
+      </div>
+
+      <div class="promo-card">
+        <img src="/Productos/CC - Chuzo 4 Carnes.jpg" alt="Super Chuzo De 4 Carnes">
+        <span class="badge nuevo">NUEVO</span>
+        <h3>Super Chuzo De 4 Carnes</h3>
+        <p class="precio-descuento">$32.900 <span class="precio-anterior">$38.900</span></p>
+        <button class="btn-oferta" data-id="3" onclick="handleOfferClick(event)">Aprovechar Oferta</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Script con scroll que se devuelve al final -->
+<script>
+let scrollSpeed = 0.5;  // velocidad de scroll en pixeles por frame
+let direction = 1;      // 1 = hacia la derecha, -1 = hacia la izquierda
+const track = document.getElementById('carousel-track');
+let isPaused = false;   // solo pausa al hacer hover
+
+const autoScroll = () => {
+  const step = () => {
+    if (!isPaused) {
+      // Mover scroll en la dirección actual
+      track.scrollLeft += scrollSpeed * direction;
+
+      // Cambiar dirección si llega al final
+      if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 1) {
+        direction = -1;
+      }
+      // Cambiar dirección si llega al inicio
+      if (track.scrollLeft <= 0) {
+        direction = 1;
+      }
+    }
+    requestAnimationFrame(step);
+  };
+  step();
+};
+
+// Pausar solo si el mouse está encima
+track.addEventListener('mouseenter', () => { isPaused = true; });
+track.addEventListener('mouseleave', () => { isPaused = false; });
+
+window.addEventListener('load', () => {
+  // Duplicar promos para scroll infinito simulado
+  if (track.children.length > 0 && track.children.length <= 10) {
+    const promos = [...track.children];
+    promos.forEach(promo => {
+      const clone = promo.cloneNode(true);
+      track.appendChild(clone);
+    });
+  }
+  autoScroll();
+});
+</script>
+
+
+
+<!-- Sección "Sobre Nosotros" -->
+<section class="info-section" aria-label="Información sobre el restaurante">
+  <div class="section-header">
+    <h2>Sobre Nosotros</h2>
+    <p class="section-subtitle">Nuestra pasión por la buena comida</p>
+  </div>
+
+  <div class="about-content" style="display: flex; gap: 2rem; align-items: center;">
+    <!-- Texto principal y características con íconos -->
+    <div class="about-text" style="flex: 1;">
+      <p>
+        Ubicados en el corazón de la ciudad, en <strong>ATLANTIC BURGER COMPANY</strong> nos dedicamos a brindar una experiencia culinaria de primer nivel,
+        con un servicio atento y un ambiente cómodo y elegante, ideal para compartir momentos inolvidables.
+      </p>
+      <p>
+        Creemos que cada comida es una oportunidad para crear recuerdos. Desde nuestras jugosas hamburguesas artesanales hasta nuestras irresistibles salchipapas, cada plato está hecho con pasión.
+      </p>
+
+      <!-- Características con íconos organizadas en lista vertical, alineadas con el texto -->
+      <div class="about-features" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; max-width: 300px;">
+        <div class="feature" style="display: flex; align-items: center; gap: 0.75rem;">
+          <i class="fas fa-seedling" aria-hidden="true" style="color: #4CAF50; font-size: 1.5rem;"></i>
+          <p style="margin: 0; font-weight: 600;">Ingredientes frescos y locales</p>
+        </div>
+        <div class="feature" style="display: flex; align-items: center; gap: 0.75rem;">
+          <i class="fas fa-bread-slice" aria-hidden="true" style="color: #D2691E; font-size: 1.5rem;"></i>
+          <p style="margin: 0; font-weight: 600;">Panes recién horneados</p>
+        </div>
+        <div class="feature" style="display: flex; align-items: center; gap: 0.75rem;">
+          <i class="fas fa-heart" aria-hidden="true" style="color: #E91E63; font-size: 1.5rem;"></i>
+          <p style="margin: 0; font-weight: 600;">Preparado with amor</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Imagen al lado derecho -->
+    <div class="about-image" style="flex: 1; text-align: center;">
+      <img src="/Imagenes/1. Logo Abc.png" alt="Logo de ATLANTIC BURGER COMPANY" style="max-width: 100%; height: auto; border-radius: 12px;" />
+    </div>
+  </div>
+
+  <!-- Apartado aparte para horario y contacto -->
+  <div class="contact-info" style="margin-top: 3rem; border-top: 1px solid #ccc; padding-top: 2rem; display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
+    <div class="info-item" style="display: flex; align-items: center; gap: 0.75rem; min-width: 200px;">
+      <i class="fas fa-clock" aria-hidden="true" style="font-size: 1.25rem; color: #555;"></i>
+      <p><strong>Horario:</strong> De martes a domingo:
+
+Mañanas: 11:30 a.m. - 2:10 p.m.
+
+Tardes: 6:00 p.m. - 10:00 p.m.</p>
+    </div>
+    <div class="info-item" style="display: flex; align-items: center; gap: 0.75rem; min-width: 200px;">
+      <i class="fas fa-phone" aria-hidden="true" style="font-size: 1.25rem; color: #555;"></i>
+      <p><strong>Teléfono:</strong> +57 3008370095</p>
+    </div>
+    <div class="info-item" style="display: flex; align-items: center; gap: 0.75rem; min-width: 200px;">
+      <i class="fas fa-envelope" aria-hidden="true" style="font-size: 1.25rem; color: #555;"></i>
+      <p><strong>Email:</strong> atlanticburgercompanybga@gmail.com</p>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Sección de Testimonios -->
+<section class="testimonials-section">
+  <h2 class="testimonials-title">Testimonios de nuestros clientes</h2>
+  <div class="testimonials-carousel">
+    
+    <div class="testimonial-card">
+      <div class="testimonial-text">Una experiencia increíble, productos deliciosos y servicio rápido. ¡Súper recomendado!</div>
+      <div class="testimonial-author">Sofía Ramírez</div>
+      <div class="testimonial-stars">★★★★★</div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-text">Atención impecable. Me sorprendió la calidad del empaque y el sabor. Volveré pronto.</div>
+      <div class="testimonial-author">Carlos Pérez</div>
+      <div class="testimonial-stars">★★★★☆</div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-text">Muy buen servicio. La comida llegó caliente y todo estaba fresco. 10/10.</div>
+      <div class="testimonial-author">Mariana Torres</div>
+      <div class="testimonial-stars">★★★★★</div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-text">Me encantó la variedad del menú. Es difícil decidir porque todo se ve delicioso.</div>
+      <div class="testimonial-author">Felipe Gutiérrez</div>
+      <div class="testimonial-stars">★★★★☆</div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-text">¡Excelente sabor! Lo recomendaré a mis amigos y familia sin dudarlo.</div>
+      <div class="testimonial-author">Laura Mendoza</div>
+      <div class="testimonial-stars">★★★★★</div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-text">Todo estuvo bien, aunque el pedido tardó un poco. Aun así, muy buena experiencia.</div>
+      <div class="testimonial-author">Andrés Salazar</div>
+      <div class="testimonial-stars">★★★☆☆</div>
+    </div>
+
+  </div>
+</section>
+
+
+<section id="redes-sociales">
+  <h2 class="titulo-redes">SÍGUENOS EN NUESTRAS REDES SOCIALES</h2>
+  <p class="descripcion-redes">¡Mantente al día con nuestras últimas novedades y promociones!</p>
+
+  <div class="contenedor-redes">
+    <div class="social-item">
+      <a href="https://facebook.com" class="social-btn facebook" target="_blank">
+        <img src="/Imagenes/facebook-icon-logo-png-transparent.png" alt="Facebook" class="social-icon">
+      </a>
+      <span class="social-label">Facebook</span>
+    </div>
+
+    <div class="social-item">
+      <a href="https://instagram.com" class="social-btn instagram" target="_blank">
+        <img src="/Imagenes/Icono Instagram.jpg" alt="Instagram" class="social-icon">
+      </a>
+      <span class="social-label">Instagram</span>
+    </div>
+
+    <div class="social-item">
+      <a href="https://wa.me/573001112233" class="social-btn whatsapp" target="_blank">
+        <img src="/Imagenes/Icono WhatsApp.jpg" alt="WhatsApp" class="social-icon">
+      </a>
+      <span class="social-label">WhatsApp</span>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+<section class="find-us-section" aria-label="Ubicación y contacto">
+  <div class="find-us-container">
+    
+    <div class="find-us-text">
+      <h2 class="section-title">¿Te gustaría encontrarnos?</h2>
+      <p class="intro-text">
+        ¡Estamos ansiosos por recibirte en <strong>ATLANTIC BURGER COMPANY</strong>! 
+        Nos encontramos convenientemente ubicados en el corazón de la ciudad, fácilmente accesible desde cualquier punto.
+      </p>
+
+      <div class="info-block">
+        <h3>Atlantic Burger Company</h3>
+
+        <div class="info-row">
+          <strong>Dirección:</strong>
+          Cl. 32 #30a-11, Bucaramanga, Santander
+        </div>
+
+        <div class="info-row reviews">
+          <span class="stars">★★★★★</span>
+          <a href="https://www.google.com/maps/place/Atlantic+Burger+Company" target="_blank" rel="noopener noreferrer">
+            4.5 (69 reseñas)
+          </a>
+        </div>
+
+        <div class="info-row">
+          <strong>Horario:</strong>
+          De martes a domingo:<br>
+          Mañanas: 11:30 a.m. - 2:10 p.m.<br>
+          Tardes: 6:00 p.m. - 10:00 p.m.
+        </div>
+
+        <div class="info-row">
+          <strong>Teléfono:</strong>
+          +57 300 837 0095
+        </div>
+      </div>
+    </div>
+
+    <div class="map-container">
+      <iframe src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=es&amp;q=Atlantic%20Burger%20Company+(Atlantic%20Burger%20Company)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" 
+              aria-label="Mapa de ubicación de ATLANTIC BURGER COMPANY">
+      </iframe>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<!-- Footer -->
+<div id="footer-main" class="footer">
+  <div class="footer-container">
+    
+    <div>
+      <h3>Sobre Nosotros</h3>
+      <ul>
+        <li><a href="/Pagina Web/SobreNosotros.html">Acerca del Restaurante</a></li>
+        <li><a href="/Pagina Web/TrabajaconNosotros.html">Trabaja con nosotros</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>Atención al Cliente</h3>
+      <ul>
+        <li><a href="/Pagina Web/TerminosyUsosweb.html">Términos de uso web</a></li>
+        <li><a href="/Pagina Web/Avisos de privacidad.html">Aviso de Privacidad</a></li>
+        <li><a href="/Pagina Web/PoliticaTratamientoDeDatos.html">Política de tratamiento de datos</a></li>
+        <li><a href="/Pagina Web/TerminosyCondiciones.html">Términos y Condiciones del Restaurante</a></li>
+      </ul>
+    </div>
+
+    <!--  AQUÍ VA TODO EL BLOQUE DE REDES DENTRO DE LA COLUMNA -->
+    <div class="footer-social">
+      <h3>Síguenos</h3>
+      <div class="social-wrapper">
+        <div class="footer-main .social-item">
+          <a href="https://www.facebook.com/share/1EgfEuqH6g/" target="_blank" rel="noopener" class="social-btn facebook">
+            <img src="/Imagenes/facebook-icon-logo-png-transparent.png" alt="Facebook">
+          </a>
+          <span class="social-label">Facebook</span>
+        </div>
+        <div class="#footer-main .social-item">
+          <a href="https://www.instagram.com/atlanticburgerbucaramanga" target="_blank" rel="noopener" class="social-btn instagram">
+            <img src="/Imagenes/Icono Instagram.jpg" alt="Instagram">
+          </a>
+          <span class="social-label">Instagram</span>
+        </div>
+        <div class="#footer-main .social-item">
+          <a href="https://wa.me/573008370095" target="_blank" rel="noopener" class="social-btn whatsapp">
+            <img src="/Imagenes/Icono WhatsApp.jpg" alt="WhatsApp">
+          </a>
+          <span class="social-label">WhatsApp</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="copyright">
+    © 2025 ATLANTIC BURGER COMPANY. Todos los derechos reservados.
+  </div>  
+</div>
+
+
+
+
+
+<!-- asistente -->
+<!-- Carga de los estilos base de n8n chat -->
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<!-- Contenedor visible en el DOM -->
+<div id="n8n-chat"></div>
+<!-- Script del chatbot con modo inline y español -->
+<script type="module">
+	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+	createChat({
+		webhookUrl: 'https://n8n-1xcn.onrender.com/webhook/74cd91ba-223a-45f2-ac94-0cc1cd00964b/chat', // Cambia por tu webhook real
+		webhookConfig: {
+			method: 'POST',
+			headers: {}
+		},
+		target: '#n8n-chat',
+		mode: 'inline', // Permite aplicar estilos CSS
+		chatInputKey: 'chatInput',
+		chatSessionKey: 'sessionId',
+		metadata: {},
+		showWelcomeScreen: true,
+		defaultLanguage: 'es',
+
+		initialMessages: [
+			'🍔 ¡Hola! Bienvenido a *Atlantic Burger Company*!',
+			'🤖 Soy tu asistente virtual. ¿Qué deseas saber hoy?'
+		],
+
+		i18n: {
+			es: {
+				title: 'Atlantic Burger Company 🍟',
+				subtitle: '¿Tienes hambre? Estoy para ayudarte 👨‍🍳',
+				footer: 'Asistente automático. Si necesitas ayuda directa, contáctanos por WhatsApp.',
+				getStarted: 'Empezar conversación',
+				inputPlaceholder: 'Escribe tu pedido o pregunta...',
+			}
+		},
+	});
+</script>
+
+
+<!-- Botón flecha para subir arriba -->
+<button id="rocketButton" aria-label="Volver arriba">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M12 4l-8 8h5v8h6v-8h5l-8-8z"/>
+  </svg>
+</button>
+
+
+<script>
+  const rocketButton = document.getElementById("rocketButton");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 100) {
+      rocketButton.classList.add("show");
+    } else {
+      rocketButton.classList.remove("show");
+    }
+  });
+
+  rocketButton.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+</script>
+
+
+</body>
+</html>

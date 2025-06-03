@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- LOGO DE LA PAGINA PESTAÑA  -->
+  <link rel="icon" href="/Imagenes/1. Logo Abc.png" type="image/x-icon">
+    <title>Atlantic Burger Company</title>
+    <link rel="stylesheet" href="/CSS/sobreNosotros.css">
+    <script src="/JavaScript/LoginScript.js"></script>
+    <script src="/JavaScript/MenuHamburguesa.js"></script>
+    
+    <script src="/JavaScript/menuinteracion.js"></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <!-- Logo -->
+    <div class="logo-wrapper">
+      <button onclick="window.location.href='index.html'" aria-label="Ir a la página principal" class="logo-button">
+        <img src="/Imagenes/1. Logo Abc.png" alt="Logo ATLANTIC BURGER COMPANY" class="logo-img" />
+      </button>
+    </div>
+
+    <!-- Botón hamburguesa -->
+    <button class="hamburger-button" id="mainHamburgerButton" aria-label="Menú" onclick="toggleMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <!-- Menú principal -->
+    <nav id="mainHamburgerMenu" role="navigation" aria-label="Menú principal">
+      <ul class="nav-list" id="navList">
+        <li><button type="button" class="nav-button" onclick="window.location.href='index.html'">Inicio</button></li>
+        <li><button type="button" class="nav-button" onclick="window.location.href='menu.html'">Menú</button></li>
+        <li><button type="button" class="nav-button" onclick="window.location.href='sobreNosotros.html'">Quienes Somos</button></li>
+        <li><button type="button" class="nav-button" onclick="window.location.href='TrabajaconNosotros.html'">Trabaja con nosotros</button></li>
+        <li>
+          <button type="button" onclick="showCart()" class="cart-button" aria-label="Ver carrito de compras">
+            <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Carrito de compras" class="cart-icon" />
+            <span id="cart-count">0</span>
+          </button>
+        </li>
+        <li>
+          <!-- Botón login (sin onclick) -->
+          <button type="button" id="loginBtn" class="login-button" aria-label="Iniciar sesión">
+            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Icono de usuario" />
+          </button>
+        </li>
+        <li id="welcomeMessage" style="font-weight: bold;"></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+
+
+
+
+
+
+
+<main>
+
+  <!-- Modal Login -->
+<div id="loginModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="loginTitle" aria-modal="true" style="display:none;">
+  <div class="modal-content" role="document">
+    <button id="closeModal" class="close-button" aria-label="Cerrar formulario">&times;</button>
+    <h2 id="loginTitle">Iniciar Sesión</h2>
+    <form id="loginForm" novalidate>
+      <label for="name">Nombre</label>
+      <input type="text" id="name" name="name" placeholder="Tu nombre" required minlength="3" />
+
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required />
+
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" name="password" placeholder="Tu contraseña" required minlength="6" />
+
+      <div id="formMessage" role="alert" aria-live="polite"></div>
+
+      <button type="submit" aria-label="Enviar formulario de inicio de sesión">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<!-- Script para el botón de inicio de sesión -->
+<script>
+// Login
+const loginBtn = document.getElementById('loginBtn');
+const loginModal = document.getElementById('loginModal');
+const closeModal = document.getElementById('closeModal');
+const loginForm = document.getElementById('loginForm');
+
+function setCookie(name, value, days) {
+  const d = new Date();
+  d.setTime(d.getTime() + (days*24*60*60*1000));
+  const expires = "expires="+ d.toUTCString();
+  document.cookie = name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
+}
+
+function getCookie(name) {
+  const cname = name + "=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(';');
+  for(let i=0; i<ca.length; i++) {
+    let c = ca[i].trim();
+    if (c.indexOf(cname) === 0) {
+      return c.substring(cname.length, c.length);
+    }
+  }
+  return "";
+}
+
+loginBtn.addEventListener('click', () => {
+  loginModal.style.display = 'flex';
+});
+
+// Cerrar modal al hacer clic en la X
+closeModal.addEventListener('click', () => {
+  loginModal.style.display = 'none';
+});
+
+// Cerrar modal si se hace clic fuera del contenido
+window.addEventListener('click', (e) => {
+  if (e.target === loginModal) {
+    loginModal.style.display = 'none';
+  }
+});
+
+// Manejar el envío del formulario
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const email = loginForm.email.value.trim();
+  const password = loginForm.password.value;
+  // Guardar en cookies por 7 días (ojo: NO es seguro guardar contraseña así, es solo un ejemplo)
+  setCookie('userName', loginForm.name.value.trim(), 7);
+  setCookie('userEmail', email, 7);
+  setCookie('userPassword', password, 7);
+
+  alert('Datos guardados en cookies. ¡Bienvenido!');
+
+  loginModal.style.display = 'none';
+  loginForm.reset();
+});
+
+const formMessage = document.getElementById('formMessage');
+
+// Mostrar modal
+loginBtn.addEventListener('click', () => {
+  loginModal.style.display = 'flex';
+  loginModal.setAttribute('aria-hidden', 'false');
+  formMessage.textContent = '';
+});
+
+// Cerrar modal
+closeModal.addEventListener('click', () => {
+  loginModal.style.display = 'none';
+  loginModal.setAttribute('aria-hidden', 'true');
+  loginForm.reset();
+  formMessage.textContent = '';
+});
+
+// Cerrar modal si clic fuera
+window.addEventListener('click', (e) => {
+  if (e.target === loginModal) {
+    loginModal.style.display = 'none';
+    loginModal.setAttribute('aria-hidden', 'true');
+    loginForm.reset();
+    formMessage.textContent = '';
+  }
+});
+
+// Validación formulario
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  // Limpiar mensaje
+  formMessage.textContent = '';
+
+  const name = loginForm.name.value.trim();
+  const email = loginForm.email.value.trim();
+  const password = loginForm.password.value;
+
+  // Validar nombre mínimo 3 caracteres
+  if (name.length < 3) {
+    formMessage.textContent = 'Por favor, ingresa un nombre válido (mínimo 3 caracteres).';
+    loginForm.name.focus();
+    return;
+  }
+
+  // Validar email con expresión regular simple
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    formMessage.textContent = 'Por favor, ingresa un correo electrónico válido.';
+    loginForm.email.focus();
+    return;
+  }
+
+  // Validar contraseña mínimo 6 caracteres
+  if (password.length < 6) {
+    formMessage.textContent = 'La contraseña debe tener al menos 6 caracteres.';
+    loginForm.password.focus();
+    return;
+  }
+
+  formMessage.style.color = '#4CAF50'; // Verde para éxito
+  formMessage.textContent = `¡Bienvenido, ${name}! Has iniciado sesión correctamente.`;
+
+  // Opcional: cerrar modal luego de unos segundos
+  setTimeout(() => {
+    loginModal.style.display = 'none';
+    loginModal.setAttribute('aria-hidden', 'true');
+    loginForm.reset();
+    formMessage.textContent = '';
+    formMessage.style.color = '#f54242'; // volver a rojo
+  }, 3000);
+});
+// Función para obtener cookie por nombre
+function getCookie(cname) {
+  const name = cname + "=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i].trim();
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+  // Mostrar saludo si existe cookie userName
+window.addEventListener('DOMContentLoaded', () => {
+  const userName = getCookie('userName');
+  if (userName) {
+    const welcomeEl = document.getElementById('welcomeUser');
+    welcomeEl.textContent = `¡Bienvenido(a), ${userName}!`;
+  }
+});
+</script>
+
+
+<!-- MODAL DEL CARRITO -->
+<div id="cart-modal" class="cart-modal">
+  <div class="cart-content">
+    <button id="close-cart" class="close-btn" onclick="hideCart()">&times;</button>
+    <h2 id="cart-title">🛒 Carrito de Compras</h2>
+    <div id="cart-items"></div>
+    <p id="cart-empty-message">Tu carrito está vacío.</p>
+    <div class="cart-total">
+      <strong>Total:</strong> $<span id="cart-total">0.00</span>
+    </div>
+    <button onclick="clearCart()">Vaciar Carrito</button>
+    <button onclick="checkout()">Finalizar Pedido</button>
+  </div>
+</div>
+  
+<!-- Sección Misión, Visión y Filosofía -->
+<section class="informacion">
+  <div class="container">
+    <div class="section-title">
+      <h1>Conócenos</h1>
+      <p>En Atlantic Burger Company, no solo cocinamos hamburguesas... creamos experiencias memorables.</p>
+    </div>
+
+    <!-- Misión -->
+    <div class="info-block">
+      <div class="text">
+        <h2>Nuestra Misión</h2>
+        <p>
+          Ofrecer una experiencia gastronómica única en Bucaramanga, combinando ingredientes frescos y de alta calidad con un ambiente acogedor y moderno.
+          Nuestro objetivo es satisfacer los paladares más exigentes con hamburguesas innovadoras, preparadas al momento para garantizar el mejor sabor y frescura.
+        </p>
+        <p>
+          Nos esforzamos cada día por mejorar nuestras recetas, incorporar productos locales, y crear un espacio donde cada cliente se sienta como en casa.
+        </p>
+      </div>
+      <div class="image">
+        <img src="/Imagenes publicidad/amigos-en-la-vista-lateral-del-restaurante.jpg" alt="Imagen representativa de la misión">
+      </div>
+    </div>
+
+    <!-- Visión -->
+    <div class="info-block reverse">
+      <div class="image">
+        <img src="/Imagenes publicidad/concepto-de-tecnologia-futurista.jpg" alt="Imagen representativa de la visión">
+      </div>
+      <div class="text">
+        <h2>Nuestra Visión</h2>
+        <p>
+          Ser la referencia principal en Bucaramanga para quienes buscan una experiencia culinaria única en hamburguesas gourmet.
+          Nos visualizamos como una marca sólida, expandiendo nuestras fronteras a nuevas ciudades y convirtiéndonos en sinónimo de calidad, creatividad e innovación en la industria gastronómica.
+        </p>
+        <p>
+          Nuestra visión también abarca un compromiso social, impulsando programas de sostenibilidad y colaborando con comunidades locales.
+        </p>
+      </div>
+    </div>
+
+    <!-- Nuestros Valores -->
+    <div class="valores">
+      <h2>Valores que nos guían</h2>
+      <div class="valores-grid">
+        <div class="valor-card">
+          <img src="/Imagenes publicidad/Sin título-1.png" alt="Ícono de calidad">
+          <h3>Calidad</h3>
+          <p>Utilizamos ingredientes frescos, locales y de primera categoría para garantizar el mejor sabor en cada hamburguesa.</p>
+        </div>
+        <div class="valor-card">
+          <img src="/Imagenes publicidad/pasion.png" alt="Ícono de pasión">
+          <h3>Pasión</h3>
+          <p>Cada plato se prepara con dedicación y amor por lo que hacemos, reflejando nuestra cultura gastronómica.</p>
+        </div>
+        <div class="valor-card">
+          <img src="/Imagenes publicidad/Captura de pantalla_26-5-2025_35940_www.freepik.com.jpeg" alt="Ícono de innovación">
+          <h3>Innovación</h3>
+          <p>Siempre estamos creando nuevas combinaciones y recetas que sorprendan a nuestros clientes.</p>
+        </div>
+        <div class="valor-card">
+          <img src="/Imagenes publicidad/Servicio.jpeg" alt="Ícono de servicio">
+          <h3>Servicio</h3>
+          <p>Buscamos que cada cliente viva una experiencia cálida, rápida y amable desde el primer momento.</p>
+        </div>
+        <div class="valor-card">
+          <img src="/Imagenes publicidad/sostenibilidad.png" alt="Ícono de sostenibilidad">
+          <h3>Sostenibilidad</h3>
+          <p>Reducimos el uso de plásticos y colaboramos con productores responsables para cuidar nuestro entorno.</p>
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- Espacio para Testimonios o Galería -->
+    <section class="extras">
+  <div class="galeria">
+    <h2>Conoce Nuestro Espacio</h2>
+    <div class="gallery-grid">
+      
+      <div class="gallery-item">
+        <img src="/Imagenes publicidad/Sitio restaurante.webp" alt="Foto del local">
+        <div class="image-title">Nuestro Restaurante</div>
+      </div>
+      
+      <div class="gallery-item">
+        <img src="/Imagenes publicidad/chef-working-together-professional-kitchen.jpg" alt="Equipo de cocina">
+        <div class="image-title">Nuestro Equipo</div>
+      </div>
+      
+      <div class="gallery-item">
+        <img src="/Imagenes publicidad/B - Quillera.jpg" alt="Hamburguesa gourmet">
+        <div class="image-title">Hamburguesas Estrella</div>
+      </div>
+      
+      <div class="gallery-item">
+        <img src="/Imagenes Clientes/Clientes 1.jpg" alt="Clientes disfrutando">
+        <div class="image-title">Clientes Felices</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Sección de Testimonios -->
+<section class="testimonials-section" aria-label="Testimonios de clientes">
+  <div class="testimonials-container">
+    <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+
+    <div class="carousel-wrapper">
+      <div class="testimonials-carousel">
+
+        <!-- Testimonio 1 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <p>“El servicio es excepcional y la comida deliciosa. ¡Recomendado!”</p>
+            <span>- María López ★★★★★</span>
+            <time datetime="2025-05-20" class="testimonial-date">20 de mayo, 2025</time>
+          </div>
+        </div>
+
+        <!-- Testimonio 2 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <p>“Un lugar perfecto para disfrutar con amigos y familia.”</p>
+            <span>- Carlos Gómez ★★★★★</span>
+            <time datetime="2025-05-18" class="testimonial-date">18 de mayo, 2025</time>
+          </div>
+        </div>
+
+        <!-- Testimonio 3 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <p>“Me encantaron las hamburguesas, son muy gourmet. La salsa de arándanos era deliciosa. Mis preferidas en Bucaramanga desde hoy.”</p>
+            <span>- Camila Lizcano Herrera ★★★★★</span>
+            <time datetime="2025-05-15" class="testimonial-date">15 de mayo, 2025</time>
+          </div>
+        </div>
+
+        <!-- Testimonio 4 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <p>“La descubrí por iFood y ahora soy cliente fijo. El sitio es pequeño pero acogedor, la hamburguesa estaba deliciosa.”</p>
+            <span>- Bryan ★★★★★</span>
+            <time datetime="2025-05-13" class="testimonial-date">13 de mayo, 2025</time>
+          </div>
+        </div>
+
+        <!-- Testimonio 5 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <p>“Son muy buenas las hamburguesas 😋. La atención también. Volvería sin duda.”</p>
+            <span>- Claudia Sánchez ★★★★★</span>
+            <time datetime="2025-05-10" class="testimonial-date">10 de mayo, 2025</time>
+          </div>
+        </div>
+
+        <!-- Testimonio 6 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <p>“Muy buena relación precio-calidad. La carne está bien asada, con buen sabor. No hay que hacer mucho para lograr una gran hamburguesa.”</p>
+            <span>- Eri ★★★★★</span>
+            <time datetime="2025-05-08" class="testimonial-date">8 de mayo, 2025</time>
+          </div>
+        </div>
+<!-- Testimonio 7 -->
+<div class="testimonial-card">
+  <div class="testimonial-content">
+    <p>“Delicioso. Me encantó la comida clásica con toques modernos. Buenas porciones y sabor.”</p>
+    <span>- Carolina Flórez ★★★★★</span>
+    <time datetime="2025-05-05" class="testimonial-date">5 de mayo, 2025</time>
+  </div>
+</div>
+
+<!-- Testimonio 8 -->
+<div class="testimonial-card">
+  <div class="testimonial-content">
+    <p>“Excelente lugar para compartir. La comida es deliciosa y el servicio es excepcional. 100% recomendado.”</p>
+    <span>- Sharon Ortiz Pedraza ★★★★★</span>
+    <time datetime="2025-05-03" class="testimonial-date">3 de mayo, 2025</time>
+  </div>
+</div>
+
+<!-- Testimonio 9 -->
+<div class="testimonial-card">
+  <div class="testimonial-content">
+    <p>“Súper buen restaurante. La atención y la comida son deliciosas e innovadoras. ¡Volveré pronto!”</p>
+    <span>- Joskary Arismendi ★★★★★</span>
+    <time datetime="2025-05-01" class="testimonial-date">1 de mayo, 2025</time>
+  </div>
+</div>
+
+<!-- Testimonio 10 -->
+<div class="testimonial-card">
+  <div class="testimonial-content">
+    <p>“Me encantaron las hamburguesas y las papas locas con la salsa de la casa. Ojalá siempre conserven la calidad.”</p>
+    <span>- 7061756C6F H ★★★★★</span>
+    <time datetime="2025-04-29" class="testimonial-date">29 de abril, 2025</time>
+  </div>
+</div>
+
+<!-- Testimonio 11 -->
+<div class="testimonial-card">
+  <div class="testimonial-content">
+    <p>“Pedí una hamburguesa y me sorprendió el sabor. Todo en su punto. La atención excelente.”</p>
+    <span>- Alejandra Ruiz ★★★★★</span>
+    <time datetime="2025-04-27" class="testimonial-date">27 de abril, 2025</time>
+  </div>
+</div>
+
+<!-- Testimonio 12 -->
+<div class="testimonial-card">
+  <div class="testimonial-content">
+    <p>“Una joya escondida. Comida increíble, atención rápida, ambiente familiar. ¡Felicitaciones!”</p>
+    <span>- Daniel Castaño ★★★★★</span>
+    <time datetime="2025-04-25" class="testimonial-date">25 de abril, 2025</time>
+  </div>
+</div>
+
+<!-- Testimonio 13 -->
+<div class="testimonial-card">
+  <div class="testimonial-content">
+    <p>“Fui con amigos y todos quedamos encantados. Las papas estaban increíbles. Definitivamente volveremos.”</p>
+    <span>- Laura Méndez ★★★★★</span>
+    <time datetime="2025-04-23" class="testimonial-date">23 de abril, 2025</time>
+  </div>
+</div>
+
+<!-- Testimonio 14 -->
+<div class="testimonial-card">
+  <div class="testimonial-content">
+    <p>“De los mejores lugares de comida en la ciudad. Hamburguesas jugosas y salsas únicas.”</p>
+    <span>- Santiago Hoyos ★★★★★</span>
+    <time datetime="2025-04-21" class="testimonial-date">21 de abril, 2025</time>
+  </div>
+</div>
+
+<!-- Testimonio 15 -->
+<div class="testimonial-card">
+  <div class="testimonial-content">
+    <p>“Una experiencia deliciosa desde el primer bocado. El pan, la carne, todo perfectamente balanceado.”</p>
+    <span>- Valentina Osorio ★★★★★</span>
+    <time datetime="2025-04-19" class="testimonial-date">19 de abril, 2025</time>
+  </div>
+</div>
+
+<!-- Testimonio 16 -->
+<div class="testimonial-card">
+  <div class="testimonial-content">
+    <p>“El servicio es excepcional y la comida deliciosa. ¡Recomendado!”</p>
+    <span>- María López ★★★★★</span>
+    <time datetime="2025-04-17" class="testimonial-date">17 de abril, 2025</time>
+  </div>
+</div>
+
+<!-- Testimonio 17 -->
+<div class="testimonial-card">
+  <div class="testimonial-content">
+    <p>“Un lugar perfecto para disfrutar con amigos y familia.”</p>
+    <span>- Carlos Gómez ★★★★★</span>
+    <time datetime="2025-04-15" class="testimonial-date">15 de abril, 2025</time>
+  </div>
+</div>
+ </div>
+    </div>
+  </div>
+</section> 
+
+<!-- Encuéntranos -->
+<section class="find-us-section" aria-label="Ubicación y contacto">
+  <div class="find-us-container">
+    <div class="find-us-text">
+      <h2 class="section-title">¿Te gustaría encontrarnos?</h2>
+      <p class="intro-text">
+        ¡Estamos ansiosos por recibirte en <strong>ATLANTIC BURGER COMPANY</strong>! Nuestra ubicación está estratégicamente situada en el corazón de Bucaramanga, de fácil acceso desde cualquier punto de la ciudad.
+      </p>
+
+      <div class="info-block">
+        <h3>Atlantic Burger Company</h3>
+
+        <div class="info-row">
+          <strong>📍 Dirección:</strong>
+          <span>Cl. 32 #30a-11, Bucaramanga, Santander</span>
+        </div>
+
+        <div class="info-row">
+          <strong>🕒 Horario:</strong>
+          <span>
+            <ul>
+              <li>Mañanas: 11:30 a.m. - 2:10 p.m.</li>
+              <li>Tardes: 6:00 p.m. - 10:00 p.m.</li>
+              <li>Días: Martes a Domingo</li>
+            </ul>
+          </span>
+        </div>
+
+        <div class="info-row">
+          <strong>📞 Teléfono:</strong>
+          <span>+57 300 837 0095</span>
+        </div>
+
+        <div class="reviews">
+          <span class="stars">★★★★★</span>
+          <span class="rating">
+            4.5 / 5.0 (
+            <a href="https://www.google.com/maps/place/Atlantic+Burger+Company"
+            target="_blank"
+          rel="noopener noreferrer"
+          style="color: inherit; text-decoration: underline;">
+              69 reseñas
+            </a>
+            )
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-container">
+      <iframe
+        src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Atlantic%20Burger%20Company+(Atlantic%20Burger%20Company)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+        aria-label="Mapa de ubicación de ATLANTIC BURGER COMPANY"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
+</main>
+
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-container">
+    
+    <div>
+      <h3>Sobre Nosotros</h3>
+      <ul>
+        <li><a href="/Pagina Web/SobreNosotros.html">Acerca del Restaurante</a></li>
+        <li><a href="/Pagina Web/TrabajaconNosotros.html">Trabaja con nosotros</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>Atención al Cliente</h3>
+      <ul>
+        <li><a href="/Pagina Web/TerminosyUsosweb.html">Términos de uso web</a></li>
+        <li><a href="/Pagina Web/Avisos de privacidad.html">Aviso de Privacidad</a></li>
+        <li><a href="/Pagina Web/PoliticaTratamientoDeDatos.html">Política de tratamiento de datos</a></li>
+        <li><a href="/Pagina Web/TerminosyCondiciones.html">Términos y Condiciones del Restaurante</a></li>
+      </ul>
+    </div>
+
+    <!--  AQUÍ VA TODO EL BLOQUE DE REDES DENTRO DE LA COLUMNA -->
+    <div class="footer-social">
+      <h3>Síguenos</h3>
+      <div class="social-wrapper">
+        <div class="social-item">
+          <a href="https://www.facebook.com/share/1EgfEuqH6g/" target="_blank" rel="noopener" class="social-btn facebook">
+            <img src="/Imagenes/facebook-icon-logo-png-transparent.png" alt="Facebook">
+          </a>
+          <span class="social-label">Facebook</span>
+        </div>
+        <div class="social-item">
+          <a href="https://www.instagram.com/atlanticburgerbucaramanga" target="_blank" rel="noopener" class="social-btn instagram">
+            <img src="/Imagenes/Icono Instagram.jpg" alt="Instagram">
+          </a>
+          <span class="social-label">Instagram</span>
+        </div>
+        <div class="social-item">
+          <a href="https://wa.me/573008370095" target="_blank" rel="noopener" class="social-btn whatsapp">
+            <img src="/Imagenes/Icono WhatsApp.jpg" alt="WhatsApp">
+          </a>
+          <span class="social-label">WhatsApp</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="copyright">
+    © 2025 ATLANTIC BURGER COMPANY. Todos los derechos reservados.
+  </div>
+</div>
+
+
+
+
+<!-- asistente -->
+<!-- Carga de los estilos base de n8n chat -->
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<!-- Contenedor visible en el DOM -->
+<div id="n8n-chat"></div>
+<!-- Script del chatbot con modo inline y español -->
+<script type="module">
+	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+	createChat({
+		webhookUrl: 'https://n8n-1xcn.onrender.com/webhook/74cd91ba-223a-45f2-ac94-0cc1cd00964b/chat', // Cambia por tu webhook real
+		webhookConfig: {
+			method: 'POST',
+			headers: {}
+		},
+		target: '#n8n-chat',
+		mode: 'inline', // Permite aplicar estilos CSS
+		chatInputKey: 'chatInput',
+		chatSessionKey: 'sessionId',
+		metadata: {},
+		showWelcomeScreen: true,
+		defaultLanguage: 'es',
+
+		initialMessages: [
+			'🍔 ¡Hola! Bienvenido a *Atlantic Burger Company*!',
+			'🤖 Soy tu asistente virtual. ¿Qué deseas saber hoy?'
+		],
+
+		i18n: {
+			es: {
+				title: 'Atlantic Burger Company 🍟',
+				subtitle: '¿Tienes hambre? Estoy para ayudarte 👨‍🍳',
+				footer: 'Asistente automático. Si necesitas ayuda directa, contáctanos por WhatsApp.',
+				getStarted: 'Empezar conversación',
+				inputPlaceholder: 'Escribe tu pedido o pregunta...',
+			}
+		},
+	});
+</script>
+
+<!-- Botón flecha para subir arriba -->
+<button id="rocketButton" aria-label="Volver arriba">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M12 4l-8 8h5v8h6v-8h5l-8-8z"/>
+  </svg>
+</button>
+
+
+<script>
+  const rocketButton = document.getElementById("rocketButton");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 100) {
+      rocketButton.classList.add("show");
+    } else {
+      rocketButton.classList.remove("show");
+    }
+  });
+
+  rocketButton.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+</script>
+
+</body>
+</html>

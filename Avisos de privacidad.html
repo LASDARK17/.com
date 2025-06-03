@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="ATLANTIC BURGER COMPANY ofrece una experiencia gastronómica excepcional con ingredientes frescos y sabores únicos." />
+
+  <!-- LOGO DE LA PAGINA PESTAÑA  -->
+  <link rel="icon" href="/Imagenes/1. Logo Abc.png" type="image/x-icon">
+  <title>ATLANTIC BURGER COMPANY</title>
+    <link rel="stylesheet" href="/CSS/AvisosdePrivacidad.css" />
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <!-- Logo -->
+    <div class="logo-wrapper">
+      <button onclick="window.location.href='index.html'" aria-label="Ir a la página principal" class="logo-button">
+        <img src="/Imagenes/1. Logo Abc.png" alt="Logo ATLANTIC BURGER COMPANY" class="logo-img" />
+      </button>
+    </div>
+
+    <!-- Botón hamburguesa -->
+    <button class="hamburger-button" id="mainHamburgerButton" aria-label="Menú" onclick="toggleMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <!-- Menú principal -->
+    <nav id="mainHamburgerMenu" role="navigation" aria-label="Menú principal">
+      <ul class="nav-list" id="navList">
+        <li><button type="button" class="nav-button" onclick="window.location.href='index.html'">Inicio</button></li>
+        <li><button type="button" class="nav-button" onclick="window.location.href='menu.html'">Menú</button></li>
+        <li><button type="button" class="nav-button" onclick="window.location.href='sobreNosotros.html'">Quienes Somos</button></li>
+        <li><button type="button" class="nav-button" onclick="window.location.href='TrabajaconNosotros.html'">Trabaja con nosotros</button></li>
+        <li>
+          <button type="button" onclick="showCart()" class="cart-button" aria-label="Ver carrito de compras">
+            <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Carrito de compras" class="cart-icon" />
+            <span id="cart-count">0</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" id="loginBtn" onclick="toggleLogin()" class="login-button" aria-label="Iniciar sesión">
+            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Icono de usuario" />
+          </button>
+        </li>
+        <li id="welcomeMessage" style="font-weight: bold;"></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Modal Login -->
+<div id="loginModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="loginTitle" aria-modal="true" style="display:none;">
+  <div class="modal-content" role="document">
+    <button id="closeModal" class="close-button" aria-label="Cerrar formulario">&times;</button>
+    <h2 id="loginTitle">Iniciar Sesión</h2>
+    <form id="loginForm" novalidate>
+      <label for="name">Nombre</label>
+      <input type="text" id="name" name="name" placeholder="Tu nombre" required minlength="3" />
+
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required />
+
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" name="password" placeholder="Tu contraseña" required minlength="6" />
+
+      <div id="formMessage" role="alert" aria-live="polite"></div>
+
+      <button type="submit" aria-label="Enviar formulario de inicio de sesión">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<!-- Script para el botón de inicio de sesión -->
+<script>
+// Login
+const loginBtn = document.getElementById('loginBtn');
+const loginModal = document.getElementById('loginModal');
+const closeModal = document.getElementById('closeModal');
+const loginForm = document.getElementById('loginForm');
+
+function setCookie(name, value, days) {
+  const d = new Date();
+  d.setTime(d.getTime() + (days*24*60*60*1000));
+  const expires = "expires="+ d.toUTCString();
+  document.cookie = name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
+}
+
+function getCookie(name) {
+  const cname = name + "=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(';');
+  for(let i=0; i<ca.length; i++) {
+    let c = ca[i].trim();
+    if (c.indexOf(cname) === 0) {
+      return c.substring(cname.length, c.length);
+    }
+  }
+  return "";
+}
+
+loginBtn.addEventListener('click', () => {
+  loginModal.style.display = 'flex';
+});
+
+// Cerrar modal al hacer clic en la X
+closeModal.addEventListener('click', () => {
+  loginModal.style.display = 'none';
+});
+
+// Cerrar modal si se hace clic fuera del contenido
+window.addEventListener('click', (e) => {
+  if (e.target === loginModal) {
+    loginModal.style.display = 'none';
+  }
+});
+
+// Manejar el envío del formulario
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const email = loginForm.email.value.trim();
+  const password = loginForm.password.value;
+  // Guardar en cookies por 7 días (ojo: NO es seguro guardar contraseña así, es solo un ejemplo)
+  setCookie('userName', loginForm.name.value.trim(), 7);
+  setCookie('userEmail', email, 7);
+  setCookie('userPassword', password, 7);
+
+  alert('Datos guardados en cookies. ¡Bienvenido!');
+
+  loginModal.style.display = 'none';
+  loginForm.reset();
+});
+
+const formMessage = document.getElementById('formMessage');
+
+// Mostrar modal
+loginBtn.addEventListener('click', () => {
+  loginModal.style.display = 'flex';
+  loginModal.setAttribute('aria-hidden', 'false');
+  formMessage.textContent = '';
+});
+
+// Cerrar modal
+closeModal.addEventListener('click', () => {
+  loginModal.style.display = 'none';
+  loginModal.setAttribute('aria-hidden', 'true');
+  loginForm.reset();
+  formMessage.textContent = '';
+});
+
+// Cerrar modal si clic fuera
+window.addEventListener('click', (e) => {
+  if (e.target === loginModal) {
+    loginModal.style.display = 'none';
+    loginModal.setAttribute('aria-hidden', 'true');
+    loginForm.reset();
+    formMessage.textContent = '';
+  }
+});
+
+// Validación formulario
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  // Limpiar mensaje
+  formMessage.textContent = '';
+
+  const name = loginForm.name.value.trim();
+  const email = loginForm.email.value.trim();
+  const password = loginForm.password.value;
+
+  // Validar nombre mínimo 3 caracteres
+  if (name.length < 3) {
+    formMessage.textContent = 'Por favor, ingresa un nombre válido (mínimo 3 caracteres).';
+    loginForm.name.focus();
+    return;
+  }
+
+  // Validar email con expresión regular simple
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    formMessage.textContent = 'Por favor, ingresa un correo electrónico válido.';
+    loginForm.email.focus();
+    return;
+  }
+
+  // Validar contraseña mínimo 6 caracteres
+  if (password.length < 6) {
+    formMessage.textContent = 'La contraseña debe tener al menos 6 caracteres.';
+    loginForm.password.focus();
+    return;
+  }
+
+  formMessage.style.color = '#4CAF50'; // Verde para éxito
+  formMessage.textContent = `¡Bienvenido, ${name}! Has iniciado sesión correctamente.`;
+
+  // Opcional: cerrar modal luego de unos segundos
+  setTimeout(() => {
+    loginModal.style.display = 'none';
+    loginModal.setAttribute('aria-hidden', 'true');
+    loginForm.reset();
+    formMessage.textContent = '';
+    formMessage.style.color = '#f54242'; // volver a rojo
+  }, 3000);
+});
+// Función para obtener cookie por nombre
+function getCookie(cname) {
+  const name = cname + "=";
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i].trim();
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+  // Mostrar saludo si existe cookie userName
+window.addEventListener('DOMContentLoaded', () => {
+  const userName = getCookie('userName');
+  if (userName) {
+    const welcomeEl = document.getElementById('welcomeUser');
+    welcomeEl.textContent = `¡Bienvenido(a), ${userName}!`;
+  }
+});
+</script>
+
+<main>
+    <h1>Aviso de Privacidad</h1>
+
+    <p>En [Nombre de la empresa], estamos comprometidos con la protección de tus datos personales y la privacidad. Este aviso de privacidad describe cómo recopilamos, usamos y protegemos tu información personal.</p>
+
+    <h2>1. Responsable del tratamiento de datos</h2>
+    <p>El responsable de la protección de tus datos personales es [Nombre de la empresa], con domicilio en [Dirección], y contacto en [Correo electrónico / Teléfono].</p>
+
+    <h2>2. Datos personales que recopilamos</h2>
+    <p>Podemos recopilar los siguientes datos personales:</p>
+    <ul>
+        <li>Nombre completo</li>
+        <li>Correo electrónico</li>
+        <li>Teléfono</li>
+        <li>Dirección</li>
+        <li>Información de pago</li>
+    </ul>
+
+    <h2>3. Finalidades del tratamiento</h2>
+    <p>Los datos personales que recopilamos se utilizan para las siguientes finalidades:</p>
+    <ul>
+        <li>Procesar y entregar pedidos.</li>
+        <li>Contactarte para soporte o atención al cliente.</li>
+        <li>Enviar información promocional y comercial, siempre que cuentes con tu consentimiento.</li>
+        <li>Cumplir con obligaciones legales y fiscales.</li>
+    </ul>
+
+    <h2>4. Derechos ARCO</h2>
+    <p>Tienes derecho a acceder, rectificar, cancelar u oponerte al tratamiento de tus datos personales. Para ejercer estos derechos, puedes contactarnos en [correo electrónico o dirección].</p>
+
+    <h2>5. Medidas de seguridad</h2>
+    <p>Implementamos medidas técnicas y administrativas para proteger tus datos personales contra daño, pérdida, alteración, destrucción o uso no autorizado.</p>
+
+    <h2>6. Cambios en el aviso de privacidad</h2>
+    <p>Nos reservamos el derecho de actualizar este aviso de privacidad. Cualquier cambio será informado a través de nuestro sitio web o mediante notificación directa.</p>
+
+    <p>Última actualización: [Fecha]</p>
+</main>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-container">
+    
+    <div>
+      <h3>Sobre Nosotros</h3>
+      <ul>
+        <li><a href="/Pagina Web/SobreNosotros.html">Acerca del Restaurante</a></li>
+        <li><a href="/Pagina Web/TrabajaconNosotros.html">Trabaja con nosotros</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>Atención al Cliente</h3>
+      <ul>
+        <li><a href="/Pagina Web/TerminosyUsosweb.html">Términos de uso web</a></li>
+        <li><a href="/Pagina Web/Avisos de privacidad.html">Aviso de Privacidad</a></li>
+        <li><a href="/Pagina Web/PoliticaTratamientoDeDatos.html">Política de tratamiento de datos</a></li>
+        <li><a href="/Pagina Web/TerminosyCondiciones.html">Términos y Condiciones del Restaurante</a></li>
+      </ul>
+    </div>
+
+    <!--  AQUÍ VA TODO EL BLOQUE DE REDES DENTRO DE LA COLUMNA -->
+    <div class="footer-social">
+      <h3>Síguenos</h3>
+      <div class="social-wrapper">
+        <div class="social-item">
+          <a href="https://www.facebook.com/share/1EgfEuqH6g/" target="_blank" rel="noopener" class="social-btn facebook">
+            <img src="/Imagenes/facebook-icon-logo-png-transparent.png" alt="Facebook">
+          </a>
+          <span class="social-label">Facebook</span>
+        </div>
+        <div class="social-item">
+          <a href="https://www.instagram.com/atlanticburgerbucaramanga" target="_blank" rel="noopener" class="social-btn instagram">
+            <img src="/Imagenes/Icono Instagram.jpg" alt="Instagram">
+          </a>
+          <span class="social-label">Instagram</span>
+        </div>
+        <div class="social-item">
+          <a href="https://wa.me/573008370095" target="_blank" rel="noopener" class="social-btn whatsapp">
+            <img src="/Imagenes/Icono WhatsApp.jpg" alt="WhatsApp">
+          </a>
+          <span class="social-label">WhatsApp</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="copyright">
+    © 2025 ATLANTIC BURGER COMPANY. Todos los derechos reservados.
+  </div>
+</div>
+
+
+<!-- asistente -->
+<!-- Carga de los estilos base de n8n chat -->
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<!-- Contenedor visible en el DOM -->
+<div id="n8n-chat"></div>
+<!-- Script del chatbot con modo inline y español -->
+<script type="module">
+	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+	createChat({
+		webhookUrl: 'https://n8n-1xcn.onrender.com/webhook/74cd91ba-223a-45f2-ac94-0cc1cd00964b/chat', // Cambia por tu webhook real
+		webhookConfig: {
+			method: 'POST',
+			headers: {}
+		},
+		target: '#n8n-chat',
+		mode: 'inline', // Permite aplicar estilos CSS
+		chatInputKey: 'chatInput',
+		chatSessionKey: 'sessionId',
+		metadata: {},
+		showWelcomeScreen: true,
+		defaultLanguage: 'es',
+
+		initialMessages: [
+			'🍔 ¡Hola! Bienvenido a *Atlantic Burger Company*!',
+			'🤖 Soy tu asistente virtual. ¿Qué deseas saber hoy?'
+		],
+
+		i18n: {
+			es: {
+				title: 'Atlantic Burger Company 🍟',
+				subtitle: '¿Tienes hambre? Estoy para ayudarte 👨‍🍳',
+				footer: 'Asistente automático. Si necesitas ayuda directa, contáctanos por WhatsApp.',
+				getStarted: 'Empezar conversación',
+				inputPlaceholder: 'Escribe tu pedido o pregunta...',
+			}
+		},
+	});
+</script>
+
+<!-- Botón flecha para subir arriba -->
+<button id="rocketButton" aria-label="Volver arriba">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M12 4l-8 8h5v8h6v-8h5l-8-8z"/>
+  </svg>
+</button>
+
+
+<script>
+  const rocketButton = document.getElementById("rocketButton");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 100) {
+      rocketButton.classList.add("show");
+    } else {
+      rocketButton.classList.remove("show");
+    }
+  });
+
+  rocketButton.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+</script>
+
+</body>
+</html>
