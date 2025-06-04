@@ -698,12 +698,42 @@ Tardes: 6:00 p.m. - 10:00 p.m.</p>
 
 
 <!-- asistente -->
-<script 
-    src="https://cdn.builderbot.cloud/sdk.umd.js" 
-    data-builderbot-chat
-    data-company="BuilderBot"
-    data-id="58ca2d38-f54b-4640-8a95-b0102d094fc4"
-  ></script>
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<!-- Contenedor visible en el DOM -->
+<div id="n8n-chat"></div>
+<script type="module">
+	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+	createChat({
+		webhookUrl: 'https://n8n-1xcn.onrender.com/webhook/74cd91ba-223a-45f2-ac94-0cc1cd00964b/chat', // Cambia por tu webhook real
+		webhookConfig: {
+			method: 'POST',
+			headers: {}
+		},
+		target: '#n8n-chat',
+		mode: 'inline', // Permite aplicar estilos CSS
+		chatInputKey: 'chatInput',
+		chatSessionKey: 'sessionId',
+		metadata: {},
+		showWelcomeScreen: true,
+		defaultLanguage: 'es',
+
+		initialMessages: [
+			'🍔 ¡Hola! Bienvenido a *Atlantic Burger Company*!',
+			'🤖 Soy tu asistente virtual. ¿Qué deseas saber hoy?'
+		],
+
+		i18n: {
+			es: {
+				title: 'Atlantic Burger Company 🍟',
+				subtitle: '¿Tienes hambre? Estoy para ayudarte 👨‍🍳',
+				footer: 'Asistente automático. Si necesitas ayuda directa, contáctanos por WhatsApp.',
+				getStarted: 'Empezar conversación',
+				inputPlaceholder: 'Escribe tu pedido o pregunta...',
+			}
+		},
+	});
+</script>
 
 
 <!-- Botón flecha para subir arriba -->
